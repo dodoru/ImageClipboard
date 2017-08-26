@@ -1,15 +1,31 @@
 <html>
-  <body>
-    <div id="box" />
+<body>
+<h1>ImageClipboard Sample</h1>
+<div id="id-div-preview">
+    <p>pasted imgs:</p>
+</div>
+<textarea id="id-text-editor" rows="20" cols="100">
+    Copy an Image Into Clipboard and then Paste it Here by Ctrl+P
+</textarea>
+<script type="text/javascript" src="../imageClipboard.js"></script>
+<script type="text/javascript">
+    function hdlPaste(base64) {
+        var editor = document.querySelector("#id-text-editor");
+        var img = `<img src="${base64}">\n`
+        editor.value = editor.value + img;
+        console.log('pastedImg:', base64);
+    }
 
-    <script type="text/javascript" src="../ImageClipboard.js"></script>
-    <script type="text/javascript">
-      var ic = new ImageClipboard('#box');
-      if (ic) console.log('hm');
-      else console.log('yay');
-      ic.onpaste = function (base64) {
-        console.log(base64);
-      };
-    </script>
-  </body>
+    var box = new ImageClipboard('#id-div-preview', hdlPaste);
+
+    /*
+    // usage 1: active debug mode
+        var box = new ImageClipboard('#id-div-preview', hdlPaste, true);
+    // usage 2: set onPaste later
+        var box = new ImageClipboard('#id-div-preview');
+        box.onpaste = hdlPaste;
+    */
+
+</script>
+</body>
 </html>
