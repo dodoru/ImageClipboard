@@ -1,30 +1,42 @@
-###Install
+# ImageClipboard
+---
+### Paste images from clipboard to your site.
+Tested on the latest versions of Chrome, Firefox, Opera and Safari.
+---
+
+### Install
 ```
 bower install image-clipboard
 ```
 
-###Paste images from clipboard to your site.
-
+### Usage Sample
 
 ```html
-<div id="box"></div>
-<script type="text/javascript" src="ImageClipBoard.min.js"></script>
+<div id="id-div-preview">
+    <p>pasted imgs:</p>
+</div>
+<textarea id="id-text-editor" rows="20" cols="100">
+    Copy an Image Into Clipboard and then Paste it Here by Ctrl+P
+</textarea>
+
+<script type="text/javascript" src="../imageClipboard.js"></script>
 <script type="text/javascript">
+    function hdlPaste(base64) {
+        var editor = document.querySelector("#id-text-editor");
+        var img = `<img src="${base64}">\n`
+        editor.value = editor.value + img;
+        console.log('pastedImg:', base64);
+    };
+    var box = new ImageClipboard('#id-div-preview', hdlPaste);
 
-  var clipboard = new ImageClipboard('#box', function (base64) {
-    //do stuff with pasted image
-  });
-  
-  //onpaste-callback can also be passed as second argument
-  //in the constructor above.
-  clipboard.onpaste = function (base64) {
-    //do stuff with the pasted image
-  });
-
-  //you can also pass in single DOM-element instead of 
-  //query as the first parameter.
+    /*
+    // usage 1: active debug mode with console.log
+        var box = new ImageClipboard('#id-div-preview', hdlPaste, true);
+    // usage 2: set onPaste later
+        var box = new ImageClipboard('#id-div-preview');
+        box.onpaste = hdlPaste;
+    */
 
 </script>
 ```
 
-Tested on the latest versions of Chrome, Firefox and Opera. Not tested on Safari.
